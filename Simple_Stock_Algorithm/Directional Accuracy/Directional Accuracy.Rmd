@@ -1,0 +1,257 @@
+---
+title: "Directional Accuracy for Simple Stock Algo"
+output:
+  html_document:
+    theme: yeti
+    toc: true
+    toc_float: true
+  pdf_document: default
+date: "2024-11-03"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r,echo=FALSE,warning=FALSE,include=FALSE}
+library(ggplot2)
+library(quantmod)
+library(roll)
+library(lmtest)
+library(tidyr)
+library(readxl)
+library(kableExtra)
+
+ford.df <- getSymbols('F',src='yahoo',auto.assign = F)
+```
+
+# Motivation and Problem Statement:
+
+Now that we have a model for prediction, let us test the robustness of the model. We will start with **directional accuracy**. To do so, we will develop a hypothesis test to understand the model's directional accuracy. Most experts in stock market trading's directional accuracy hall around 50%. **Note: Directional accuracy is not the only indicator of a good model, nor is it a grantee that a model will perform well in terms of profit.** Therefore, this will be the basis of our hypothesis test.
+
+```{r,include=FALSE}
+# Necessary Functions
+simple.algo <<- function(data,omega,min,max){
+  prices <- data[min:max]
+  # 3-day MA
+  moving.average <- stats::filter(prices,rep(1/3, 3), sides = 1)
+  # 3-day MSD
+  moving.standard.d <- roll_sd(prices,3)
+  # 3-day MA + 3-day MSD
+  func <- moving.average + omega * moving.standard.d 
+  # error
+  error <- prices - func
+  
+  # Remove NA values
+  prices <- prices[!is.na(moving.average)]
+  moving.average <- moving.average[!is.na(moving.average)]
+  moving.standard.d <- moving.standard.d[!is.na(moving.standard.d)]
+  func <- func[!is.na(func)]
+  error <- round(error[!is.na(error)],3)
+  
+
+  #Let us Make a new dataframe with all of the values:
+  new.df <- as.data.frame(cbind(prices,
+                              moving.average,
+                              moving.standard.d,
+                              func,
+                              error))
+                          
+  colnames(new.df) <- c("Prices",
+                        "MovingAverage",
+                        "MovingStandardDev",
+                        "Func",
+                        "Error")
+  
+  return(new.df)
+}
+
+gradient.descent <- function(data,learning.rate=0.01,iterations=1000){
+  # Naming Variables
+  price <- data$Price
+  moving.average <- data$MovingAverage
+  moving.standard.d <- data$MovingStandardDev
+  
+  # Number of Training Examples:
+  m <- length(price)
+  
+  # Initiate omega
+  omega <- 0
+  
+  omega.values <- numeric(iterations)
+  
+  # Gradient Descent Loop:
+  for(i in 1:iterations){
+    #print(omega)
+    # Compute the Predictions Based on Current Data:
+    predictions <- moving.average + omega * moving.standard.d
+    
+    # Calculate the Error:
+    error <- predictions - price
+    
+    # Compute Gradient:
+    gradient <- (1/m) * sum(error * moving.standard.d)
+    #cat("Gradient: ",gradient)
+    
+    # Update Omega
+    omega <- omega - learning.rate * gradient
+    
+    omega.values[i] <- omega
+  }
+  # Return Optimized Values:
+  return(omega)
+}
+```
+
+# Model and Graph
+
+```{r, warning=FALSE}
+# Create a MSE Funcion:
+mse.stock <- function(data){
+  return(mean(data$Error^2))
+}
+
+# Create Optimized Model:
+sample <- c(runif(1,0,350),runif(1,351,1000),runif(1,1001,1500))
+left <- sample(sample,1)
+right <- round(runif(1,1501,length(ford.df$F.Close)))
+print(right - left)
+data <- ford.df$F.Close # Data for Model
+ford.original <- simple.algo(data,1,left,right) # Original Model with Omega = 1
+omega <- gradient.descent(ford.original) # Calculate Optimized Omega
+cat("Omega:",omega)
+ford.optimized <- simple.algo(data,omega,left,right) # Optimized Model
+
+# Compare MSE Values:
+og.mse <- mse.stock(ford.original)
+opt.mse <- mse.stock(ford.optimized)
+cat("Origiinal MSE: ",og.mse,
+    "\n",
+    "Optimized MSE: ",opt.mse)
+
+# Graph Models
+x = c(1:length(ford.optimized$Prices))
+ggplot(data = ford.optimized)+
+  geom_line(aes(x=x,y=ford.optimized$Prices),col="red")+
+  geom_line(aes(x=x,y=ford.optimized$Func),col="blue")+
+  geom_line(aes(x=x,y=ford.original$Func),col="black")
+
+```
+
+# Directional Accuracy Testing: How well does the algorithm detect ups and downs in the price?
+
+We want to test directional accuracy of our model. We do not want this to be too high, as we will over fit. We also do not want this to be too low. Let us observe different window sizes to see where the directional accuracy converges.
+
+```{r, warning=FALSE}
+direction.comparison <- function(data){
+  # Retrieve Data
+  prices <- data$Prices
+  model <- data$Func
+  
+  # Convert to Binary Vectors
+  prices.bin <- ifelse(diff(prices) > 0,1,0) 
+  model.bin <- ifelse(diff(model) > 0,1,0) 
+  
+  # Discard NA's
+  prices.bin <- prices.bin[!is.na(prices.bin)]
+  model.bin <- model.bin[!is.na(model.bin)]
+  
+  # Check for Congruence:
+  check <- ifelse(prices.bin == model.bin,1,0)
+  
+  # Accuracy Percentage:
+  acc <- sum(check)/length(check)
+  
+  return(acc)
+}
+
+# For function we need data, iterations
+acc.func <- function(data,omega,iterations){
+  
+  omega <- omega
+  data <- data
+  
+  # Initialize Empty Vectors:
+  window <- c() # Initialized Window Vector
+  accuracy <- c() # Initialized 
+
+  iterations <- iterations # For loop iterations
+  
+  middle <- round(length(data$Prices)/2) # For runif
+
+  # Loop
+  i = 0
+  time.a <- proc.time()[3]
+  for(i in 1:iterations){
+    # 1. Create Bounds:
+    left <- round(runif(1,0,middle))
+    #print(left)
+    right <- round(runif(1,middle+1,length(data$Prices)))
+    #print(right)
+    #cat(left,right)
+    # 2. Create Models:
+    model <- simple.algo(data$Prices,omega,left,right)
+    #print(2)
+    # 3. Run Accuracy Function
+    acc <- direction.comparison(model)
+    #print(4)
+    # 4. Append Vectors
+    window <- append(window,right-left)
+    accuracy <- append(accuracy,acc)
+    #print(5)
+  }
+    time.b <- proc.time()[3]
+
+    #print(time.b - time.a) # Prints time to complete algorithm
+    #print(summary(window)) # Prints range of window
+    
+    df <- data.frame(window,accuracy)
+    return(df)
+}
+
+accuracy.check <- acc.func(ford.optimized,omega,500)
+```
+
+# Analysis of Findings
+
+## Graph of Window vs Accuracy
+
+```{r,warning=FALSE,echo=FALSE}
+x <- accuracy.check$window 
+ggplot(data = accuracy.check)+
+  geom_point(aes(x=x,y=accuracy.check$accuracy),col="black")+
+  xlab("Window")+
+  ylab("Directional Accuracy")
+```
+
+We can see there is around a 6% range between accuracy when the window i small. As the window gets larger, the accuracy becomes more stable above 70%
+
+## Hypothesis Testing:
+
+Let us develop a null hypothesis: Since random guessing will yield about 50%, let us set up our null hypothesis of the directional accuracy:
+
+$H_{0}: p \leq 0.5$: The directional accuracy of the model is less than or equal to $0.5$ </br>
+
+$H_{a}: p > 0.5$: The directional accuracy of the model is greater than $0.5$
+
+We need our test statistic:
+
+We will use a one sample proportion test, therefore our test statistic will be: $$Z =\frac{\hat{p}-p_{0}}{\sqrt{\frac{p_{0}(1-p_{0})}{n}}}$$
+
+```{r}
+# Calculate Accuracy for One Sample:
+p.hat.vec <- acc.func(ford.optimized,omega,1)
+p.hat <- p.hat.vec$accuracy
+p0 <- 0.5
+cat("P Hat: ",p.hat,"\n")
+
+# Calculate Z-Statistic:
+z <- (p.hat - p0)/(sqrt((p0*(1-p0))/(length(ford.optimized$Prices))))
+cat("Z-Value: ",z,"\n")
+
+# Calculate p-value
+p.value <- pnorm(z,0,1,lower.tail = F)
+cat("P-Value: ",p.value,"\n")
+```
+
+Our p-value is significantly lower than $0.05$, therefore we will reject the null hypothesis of 
