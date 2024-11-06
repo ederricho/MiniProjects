@@ -167,6 +167,9 @@ direction.comparison <- function(data,min = 0,max = length(data$Prices)){
 # ------------------ Directional Accuracy Through Random Windows ----------------
 # -------------------------------------------------------------------------------
 
+# We are using time series cross validation to see where the 
+# directional accuracy converges
+
 # Data
 stock.df <- getSymbols('DDD',src='yahoo',auto.assign = F)
 
