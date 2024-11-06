@@ -217,6 +217,8 @@ We can see the variance of directional accuracy at lower window sizes is larger 
 What if I use one window through the entire data set? What will the directional accuracy be and which window yields the best directional accuracy.
 
 **Note: This code is extremely slow because of the nested for loop.**
+
+**Notice: We are using time series cross validation to test for convergence directional accuracy**
 ```{r}
 # Window Sizes: Create a sequence of window sizes that get larger by a factor. 
 sizes <- c(seq(400,4000,50))
