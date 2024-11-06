@@ -86,7 +86,7 @@ simple.algo <<- function(data,omega,min,max){
   return(new.df)
 }
 
-origional <- simple.algo(prices,1,0,length(prices))
+origional <- simple.algo(prices,1,0,length(prices)) # <------ Implimentation of the Function
 
 # ------------------------------------------------------------------------
 # ---------------------- Gradient Descent --------------------------------
@@ -128,7 +128,7 @@ gradient.descent <- function(data,learning.rate=0.01,iterations=1000){
   return(omega)
 }
 
-# GD Function
+# GD Function Implimentation
 time.a <- proc.time()[3]
 omega <- gradient.descent(origional,0.01,100)
 time.b <- proc.time()[3]
