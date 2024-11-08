@@ -12,4 +12,4 @@ Here is a list of the projects and an overview of what was done:
     *  **<ins>Research Question:<ins>** Is the directional accuracy consistant using different windows of the directional accuracy test?   
 
 <ins>**SSA-GradientBooster**</ins>
- * **<ins>Research Qiestion:</ins>** Can the simple stock algorithm and the gradient booster algorithm predict error in time series? If so, can this error prediction be used to predict a value in time series?
+ * **<ins>Research Question:</ins>** Can the simple stock algorithm and the gradient booster algorithm predict error in time series? If so, can this error prediction be used to predict a value in time series?
