@@ -1,7 +1,7 @@
 # Simple Stock Algorithm
 
 Simple Explanation</br>
-![](SimpleStockAlgorithm/AdditionalFiles/ssa_dash.png)
+![](AdditionalFiles/ssa_vs_price.png)
 
 # Research Question
 
