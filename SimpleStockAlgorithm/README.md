@@ -10,7 +10,7 @@ The objective of this project is to choose a simple, easy to emplement algorithm
 To optimize $\omega$ we use the gradient descent algorithm. Gradient descent will ###.
 
 # Insights and Conclusions
-Prediction Graph
-While the model does an excelent job in detecting trends and ignoring sudden price changes that do not reflec these trends, the prediction capabilities of the algorithm leave much to be desired **(see graph above)**. The mean squared error of the algrithm with $\omega = 1$ was #### while the mean squared error of the algorithm with the optimized $\omega$ was ####. To create a better model, it would be necessary to observe the error of the SSA vs. the price and run a machine learning algorithm perhaps a **gradient booster** algorithm to predict the error. This will perhaps yield a better mean squared error and a more generalized model. **This could also lead to overfitting, especially if outliers are not handled correctly.**</br>
+![](AdditionalFiles/ssa_prediction.png)
+While the model does an excelent job in detecting trends and ignoring sudden price changes that do not reflect these trends, the prediction capabilities of the algorithm leave much to be desired **(see graph above)**. The mean squared error of the algrithm with $\omega = 1$ was 0.03064407 while the mean squared error of the algorithm with the optimized $\omega$ was 0.01684353. To create a better model, it would be necessary to observe the error of the SSA vs. the price and run a machine learning algorithm perhaps a **gradient booster** algorithm to predict the error. This will perhaps yield a better mean squared error and a more generalized model. **This could also lead to overfitting, especially if outliers are not handled correctly.**</br>
 Look below to see a table of the price, SSA prediction, and the error.
 Table Here
