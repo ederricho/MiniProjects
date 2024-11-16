@@ -13,7 +13,7 @@ Graph of SSA Prediction Interval</br>
 ![](AdditionalFiles/ssa_prediction.png)
 While the model does an excelent job detecting trends and ignoring sudden price changes that do not reflect these trends, the prediction capabilities of the algorithm leave much to be desired **(see graph above)**. The mean squared error of the algrithm with $\omega = 1$ was **$0.03064407$** while the mean squared error of the algorithm with the optimized $\omega$ was **$0.01684353$**. To create a better model, it would be necessary to observe the error of the SSA vs. the price and run a machine learning algorithm perhaps a **gradient booster** algorithm to predict the error. This will perhaps yield a better mean squared error and a more generalized model. This could also lead to overfitting, especially if outliers are not handled correctly.</br>
 
-# Information on Files in Repo
-**SSA - SimpleStockAlgo.R**: Original file containing the slgorithm function and implimentation examples.</br>
-**SSA - Directional Accuracy.R**: Contains a directional accuracy test where, we assess the model's prediction of price changes</br>
-**SSA - DirectionalAccuracyConvergenceTest.R**: Convergence test to see if directional acuracy percentage can become consistent when the window of the algorithm is increased.
+# Other Repo Files
+**<ins>SSA - SimpleStockAlgo.R</ins>**: Original file containing the slgorithm function and implimentation examples.</br>
+**<ins>SSA - Directional Accuracy.R</ins>**: Contains a directional accuracy test where, we assess the model's prediction of price changes</br>
+**<ins>SSA - DirectionalAccuracyConvergenceTest.R</ins>**: Convergence test to see if directional acuracy percentage can become consistent when the window of the algorithm is increased.
