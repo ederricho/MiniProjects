@@ -15,4 +15,4 @@ Here is a list of the projects and an overview of what was done:
  * **<ins>Research Question:</ins>** Can the simple stock algorithm and the gradient booster algorithm predict error in time series? If so, can this error prediction be used to predict a value in time series?
 
 <ins>**Trend Detection**</ins>
-* <ins>**Research QuestionL**</ins> Can we use the sum of the differences in prices during a certain period $n$ and the linear regression coefficient in the same preiod to create a rend detection model for time series?
+* <ins>**Research Question:**</ins> Can we use the sum of the differences in prices during a certain period $n$ and the linear regression coefficient in the same preiod to create a rend detection model for time series?
