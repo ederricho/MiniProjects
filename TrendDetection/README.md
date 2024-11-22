@@ -15,6 +15,11 @@ To assess the validity of $\tau$ we use the following hypothesis test:</br>
 $H_0:\tau = 0$</br>
 $H_a:\tau \neq 0$<br>
 </br>
+Recall the hypothesis test for a regression equation $\hat{y_i}=\beta_0+\beta_1x_i+\epsilon$</br>
+</br>
+$H_0:\beta_i=0$</br>
+$H_a:\beta_i \neq 0$</br>
+</br>
 Since $\tau$ represents a normalized mean, we can use a two sided t-test where $\alpha=0.05$ to detect statistical significance in $\tau$. An upward/downward movement (**trend**) will be considered when we reject both null hypotheses of $\tau$ and $\beta$, while we will consider **no trend** when we fail to reject either hypothesis.</br>
 </br>
 # Output and Conclusions
