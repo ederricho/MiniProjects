@@ -1,6 +1,6 @@
 # Trend Detection
 
-In this project I used a custom trend detector $\tau$ and the regression coefficient $\beta$ to mark the upward and downward trends in time series. For this project, I used the apple stock price data. This project was done in the R programming language. For the entire project go to the .rmd file in AdditionalFiles in this repo, for the raw code, download the above file TrendDetection.R.
+In this project I used a custom trend detector $\tau$ and the linear regression coefficient $\beta$ to mark the upward and downward trends in time series. For this project, I used the apple stock price data. This project was done in the R programming language. For the entire project go to the .rmd file in AdditionalFiles in this repo, for the raw code, download the above file TrendDetection.R.
 
 # Methodology
 
@@ -15,7 +15,7 @@ To assess the validity of $\tau$ we use the following hypothesis test:</br>
 $H_0:\tau = 0$</br>
 $H_a:\tau \neq 0$<br>
 </br>
-Recall the hypothesis test for a regression equation $\hat{y_i}=\beta_0+\beta_1x_i+\epsilon$</br>
+The ensemble method will use linear regression. Recall the hypothesis test for a regression equation $\hat{y_i}=\beta_0+\beta_1x_i+\epsilon$</br>
 </br>
 $H_0:\beta_i=0$</br>
 $H_a:\beta_i \neq 0$</br>
