@@ -16,7 +16,7 @@ $H_a:\tau \neq 0$<br>
 An upward/downward movement (**trend**) will be considered when we reject both null hypotheses of $\tau$ and $\beta$, while we will consider **no trend** when we fail to reject either hypothesis.</br>
 </br>
 <ins>Trends:</ins></br>
-
+![](AdditionalFiles/TrendTable.png)
 
 # Output and Conclusions
 image1</br>
