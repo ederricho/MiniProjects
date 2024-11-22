@@ -19,7 +19,7 @@ An upward/downward movement (**trend**) will be considered when we reject both n
 ![](AdditionalFiles/TrendTable.png)
 
 # Output and Conclusions
-image1</br>
+![](AdditionalFiles/EnsembleMethod.png)
 image2</br>
 image3</br>
 The ensemble method for $n<10$ shows inconsistent trend detection during steady rises and falls in price. When $n=10$, we see a better detection of trends while many small rises and falls in price are treated as "no trend". This is done through the regression coefficient test since it is less susceptible to volatility in the same range. This model does have issues and could use other indicators of trends including one dedicated volatility and one dedicated to momentum. Accounting for relative volatility could add robustness to the model by not allowing large swings in price pull $\tau$ in a direction that is not indicative of the larger trend.
