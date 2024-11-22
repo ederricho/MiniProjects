@@ -10,7 +10,7 @@ $\tau=\frac{\sum(y_{n-1}-y_n)}{n} \cdot \frac{1}{\sigma(y_1,...,y_n)}$</br>
 </br>
 **Note:**  $\frac{1}{\sigma(y_1,...,y_n)}$  is the normalization term.</br>
 </br>
-To assess the validity of $\tau$ we used the following hypothesis test:</br>
+To assess the validity of $\tau$ we use the following hypothesis test:</br>
 </br>
 $H_0:\tau = 0$</br>
 $H_a:\tau \neq 0$<br>
