@@ -1,10 +1,10 @@
 # Trend Detection
 
-In this project I used a custom trend detector $\tau$ and the regression coefficient $\beta$ to mark the upward and downward trends in time series. For this project, I used the apple stock price data.
+In this project I used a custom trend detector $\tau$ and the regression coefficient $\beta$ to mark the upward and downward trends in time series. For this project, I used the apple stock price data. This project was done in the R programming language. For the entire project go to the .rmd file in AdditionalFiles in this repo, for the raw code, download the above file TrendDetection.R.
 
 # Methodology
 
-The custom trend detector $\tau$ is defined as:</br>
+The custom trend detector $\tau$ is defined as the normalized mean of the price differences over a time period $n$. Mathematically:</br>
 </br>
 $\tau=\frac{\sum(y_{n-1}-y_n)}{n} \cdot \frac{1}{\sigma(y_1,...,y_n)}$</br>
 </br>
