@@ -20,7 +20,7 @@ Recall the hypothesis test for a regression equation $\hat{y_i}=\beta_0+\beta_1x
 $H_0:\beta_i=0$</br>
 $H_a:\beta_i \neq 0$</br>
 </br>
-Since $\tau$ represents a normalized mean, we can use a two sided t-test where $\alpha=0.05$ to detect statistical significance in $\tau$. An upward/downward movement (**trend**) will be considered when we reject both null hypotheses of $\tau$ and $\beta$, while we will consider **no trend** when we fail to reject either hypothesis.</br>
+Since $\tau$ represents a normalized mean, we can use a two sided t-test where $\alpha=0.05$ to detect statistical significance in $\tau$. An upward/downward movement (**trend**) will be considered when we reject both null hypotheses of $\tau$ and $\beta$ and $\tau$ and $\beta$ have the same direction, while we will consider **no trend** when we fail to reject either hypothesis **or** $\tau$ and $\beta$ have different directions.</br>
 </br>
 # Output and Conclusions
 ![](AdditionalFiles/Pictures/EnsembleMethod.png)
