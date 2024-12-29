@@ -17,3 +17,4 @@ While the model does an excelent job detecting trends and ignoring sudden price 
 **<ins>SSA - SimpleStockAlgo.R</ins>**: Original file containing the slgorithm function and implimentation examples.</br>
 **<ins>SSA - Directional Accuracy.R</ins>**: Contains a directional accuracy test where, we assess the model's prediction of price changes</br>
 **<ins>SSA - DirectionalAccuracyConvergenceTest.R</ins>**: Convergence test to see if directional acuracy percentage can become consistent when the window of the algorithm is increased.
+**<ins>SSA - SSA.ipynb</ins>**: Simple Stock Algorithm written in Python.
